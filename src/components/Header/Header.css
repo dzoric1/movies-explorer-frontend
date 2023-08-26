@@ -1,0 +1,12 @@
+.header {
+  background-color: #073042;
+}
+.header__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 18px 70px;
+}
+.header__link {
+}
+.header__logo {
+}
