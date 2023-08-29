@@ -8,7 +8,7 @@ import Navigation from "../Navigation/Navigation";
 const Header = () => {
   return (
     <header className="header">
-      <div className="header__container">
+      <div className="header__container container">
         <Link to="/">
           <img className="header__logo" src={headerLogo} alt="логотип" />
         </Link>
