@@ -44,3 +44,11 @@ html {
   margin: 0 auto;
   box-sizing: border-box;
 }
+
+.section-title {
+  font-size: 22px;
+  line-height: normal;
+  letter-spacing: -0.88px;
+  padding: 0 0 23px 0;
+  border-bottom: 1px solid #dadada;
+}
