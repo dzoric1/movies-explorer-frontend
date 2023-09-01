@@ -1,6 +1,7 @@
 import AboutMe from '../AboutMe/AboutMe';
 import AboutProject from '../AboutProject/AboutProject';
 import Header from '../Header/Header';
+import Portfolio from '../Portfolio/Portfolio';
 import Promo from '../Promo/Promo';
 import Techs from '../Techs/Techs';
 import './App.css';
@@ -14,6 +15,7 @@ function App() {
       <AboutProject />
       <Techs />
       <AboutMe />
+      <Portfolio />
     </>
   );
 }
