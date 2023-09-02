@@ -1,24 +1,15 @@
-import AboutMe from '../AboutMe/AboutMe';
-import AboutProject from '../AboutProject/AboutProject';
-import Footer from '../Footer/Footer';
-import Header from '../Header/Header';
-import Portfolio from '../Portfolio/Portfolio';
-import Promo from '../Promo/Promo';
-import Techs from '../Techs/Techs';
+import { Route, Routes } from 'react-router-dom';
+import Main from '../Main/Main';
+import Movies from '../Movies/Movies';
 import './App.css';
 
 
 function App() {
   return (
-    <>
-      <Header />
-      <Promo />
-      <AboutProject />
-      <Techs />
-      <AboutMe />
-      <Portfolio />
-      <Footer />
-    </>
+    <Routes>
+      <Route path='/' element={<Main />} />
+      <Route path='/movies' element={<Movies />} />
+    </Routes>
   );
 }
 
