@@ -6,7 +6,7 @@ import Footer from '../Footer/Footer';
 
 const Movies = () => (
   <>
-    <Header />
+    <Header isAuth={true} />
     <main>
       <Search />
       <MoviesCardList />

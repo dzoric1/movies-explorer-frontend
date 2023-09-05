@@ -4,7 +4,7 @@ import './Profile.css'
 const Profile = () => {
   return (
     <>
-      <Header />
+      <Header isAuth={true} />
       <main className="profile container">
         <h1 className="profile__title">Привет, Виталий!</h1>
         <form className="profile__form">

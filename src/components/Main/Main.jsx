@@ -9,7 +9,7 @@ import './Main.css';
 
 const Main = () => (
   <>
-    <Header />
+    <Header isMainPage={true} isAuth={true} />
     <main>
       <Promo />
       <AboutProject />
