@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import AuthInput from '../AuthInput/AuthInput';
 import './Auth.css'
 import logo from '../../assets/images/logo.svg'
 
@@ -10,7 +11,10 @@ const Auth = () => {
       </Link>
       <h1 className="auth__title">Добро пожаловать!</h1>
       <form className="auth__form">
-        <div className='auth__form-inputs'></div>
+        <div className='auth__form-inputs'>
+          <AuthInput />
+          <AuthInput />
+        </div>
         <div className='auth__form-footer'>
           <button
             className="auth__submit hover-opacity"
