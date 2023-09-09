@@ -1,21 +1,38 @@
-import './MoviesCard.css'
-import img from '../../assets/images/card.jpg'
+import { useState } from 'react';
+import './MoviesCard.css';
 
-const MoviesCard = () => {
+const MoviesCard = ({ data, isSavedList }) => {
+  const { nameRU, duration, image, trailerLink } = data;
+  const [isSaved, setIsSaved] = useState(false);
+
+  const handleButtonClick = () => {
+    setIsSaved(!isSaved)
+  };
+
   return (
     <div className='movies-card'>
       <div className='movies-card__header'>
-        <h3 className='movies-card__title'>В погоне за Бенкси</h3>
-        <p className='movies-card__duration'>27 минут</p>
+        <h3 className='movies-card__title'>{nameRU}</h3>
+        <p className='movies-card__duration'>{duration} минут</p>
       </div>
-      <div className='movies-card__image-wrapper'>
-        <img className='movies-card__image' src={img} alt={123} />
-      </div>
+      <a
+        className='movies-card__image-wrapper'
+        href={trailerLink} target='_blank'
+        rel="noreferrer"
+      >
+        <img
+          className='movies-card__image'
+          src={image}
+          alt={nameRU} />
+      </a>
       <div className='movies-card__footer'>
         <button
-          className='movie-card__button hover-opacity'
+          onClick={handleButtonClick}
+          className={
+            `movie-card__button hover-opacity
+            ${isSaved && !isSavedList ? 'movie-card__button_type_red' : ''}`}
         >
-          ✓ x Сохранить
+          {isSavedList ? 'x' : !isSaved ? 'Сохранить' : '✓'}
         </button>
       </div>
     </div>

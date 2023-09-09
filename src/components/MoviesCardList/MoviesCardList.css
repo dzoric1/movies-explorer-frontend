@@ -20,6 +20,10 @@
   gap: 30px;
 }
 
+.movies-card-list__placeholder {
+  text-align: center;
+}
+
 @media screen and (max-width: 1023px) {
   .movies-card-list__list {
     gap: 35px 25px;

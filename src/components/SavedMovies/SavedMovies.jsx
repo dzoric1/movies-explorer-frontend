@@ -9,11 +9,10 @@ const SavedMovies = () => (
     <Header isAuth={true} />
     <main>
       <Search />
-      <MoviesCardList />
+      <MoviesCardList isSavedList={true} />
     </main>
     <Footer />
   </>
-
 );
 
 export default SavedMovies;

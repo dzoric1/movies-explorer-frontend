@@ -3,8 +3,6 @@ import { NavLink } from "react-router-dom";
 import './Navigation.css';
 import profileIcon from '../../assets/images/profile-icon.svg';
 
-
-
 const Navigation = () => {
   const [isBurgerOpened, setIsBurgerOpened] = useState(false);
 

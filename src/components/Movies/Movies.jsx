@@ -9,7 +9,7 @@ const Movies = () => (
     <Header isAuth={true} />
     <main>
       <Search />
-      <MoviesCardList />
+      <MoviesCardList isSavedList={false} />
     </main>
     <Footer />
   </>
