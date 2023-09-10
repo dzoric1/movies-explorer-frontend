@@ -1,34 +1,43 @@
 import { Link } from 'react-router-dom';
-import AuthInput from '../AuthInput/AuthInput';
-import './Auth.css'
-import logo from '../../assets/images/logo.svg'
+import './Auth.css';
+import logo from '../../assets/images/logo.svg';
 
-const Auth = () => {
+const Auth = (
+  {
+    title,
+    bottomText,
+    bottomLinkText,
+    bottomLink,
+    submitButtonText,
+    children,
+    isValid,
+  }
+) => {
   return (
     <main className="auth container">
       <Link to="/">
         <img className="auth__logo" src={logo} alt="Логотип" />
       </Link>
-      <h1 className="auth__title">Добро пожаловать!</h1>
+      <h1 className="auth__title">{title}</h1>
       <form className="auth__form">
         <div className='auth__form-inputs'>
-          <AuthInput />
-          <AuthInput />
+          {children}
         </div>
         <div className='auth__form-footer'>
           <button
             className="auth__submit hover-opacity"
             type="submit"
+            disabled={!isValid}
           >
-            Зарегистрироваться
+            {submitButtonText}
           </button>
           <p className='auth__bottom-text'>
-            Уже зарегстрированы?
+            {bottomText}
             <Link
               className="auth__bottom-link hover-opacity"
-              to='/signin'
+              to={bottomLink}
             >
-              Войти
+              {bottomLinkText}
             </Link>
           </p>
         </div>
