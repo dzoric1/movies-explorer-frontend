@@ -60,6 +60,7 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #424242;
+  box-sizing: border-box;
 }
 
 .profile__field:last-of-type {
@@ -97,7 +98,7 @@
 
 .profile__error {
   position: absolute;
-  bottom: 0;
+  bottom: -13px;
   right: 0;
   font-size: 10px;
   text-align: center;
