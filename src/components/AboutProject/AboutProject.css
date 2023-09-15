@@ -86,7 +86,7 @@
 }
 
 @media screen and (max-width: 767px) {
-  .about-project__content-title {
+  .about-project__content-text {
     font-size: 11px;
     line-height: 16px;
   }
@@ -125,7 +125,7 @@
   width: 100%;
   text-align: center;
   line-height: normal;
-  padding: 9px 10px;
+  padding: 10px;
   background-color: #303030;
   margin: 0;
   box-sizing: border-box;

@@ -19,8 +19,8 @@
 .navigation__burger_active {
   position: fixed;
   transform: scale(0.75);
-  right: 16px;
-  top: 26px;
+  right: 7px;
+  top: 17px;
 }
 
 @media screen and (max-width: 769px) {
@@ -113,7 +113,7 @@
 @media screen and (max-width: 769px) {
   .navigation__links {
     flex-direction: column;
-    padding: 160px 0 90px 0;
+    padding: 145px 0 50px 0;
     max-width: 520px;
     width: 100%;
     background-color: #202020;
