@@ -10,7 +10,7 @@ const Header = ({ isMainPage = false, isAuth }) => {
     <header className={`header ${isMainPage ? 'header_type_main' : ''}`}>
       <div className="header__container container">
         <Link to="/">
-          <img className="header__logo" src={headerLogo} alt="логотип" />
+          <img className="header__logo hover-opacity" src={headerLogo} alt="логотип" />
         </Link>
         {isAuth ? <Navigation /> : <NavigationAuth />}
       </div>
