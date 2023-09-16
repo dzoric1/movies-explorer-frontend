@@ -87,7 +87,7 @@
   }
 }
 
-.movie-card__button {
+.movies-card__footer-button {
   background-color: #313131;
   border: none;
   border-radius: 30px;
@@ -100,6 +100,6 @@
   line-height: 11px;
 }
 
-.movie-card__button_type_red {
+.movies-card__footer-button_type_red {
   background-color: #ee3465;
 }

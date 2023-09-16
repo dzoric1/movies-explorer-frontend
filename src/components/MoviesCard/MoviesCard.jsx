@@ -30,8 +30,8 @@ const MoviesCard = ({ data, isSavedList }) => {
           onClick={handleButtonClick}
           type='button'
           className={
-            `movie-card__button hover-opacity
-            ${isSaved && !isSavedList ? 'movie-card__button_type_red' : ''}`}
+            `movies-card__footer-button hover-opacity
+            ${isSaved && !isSavedList ? 'movies-card__footer-button_type_red' : ''}`}
         >
           {isSavedList ? 'x' : !isSaved ? 'Сохранить' : '✓'}
         </button>

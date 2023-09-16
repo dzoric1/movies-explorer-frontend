@@ -7,7 +7,7 @@ const FilterCheckbox = ({ text }) => {
         <input className='filter-сheckbox__input' type="checkbox" id='filtered-checkbox' />
         <span className='filter-сheckbox__circle'></span>
       </label>
-      {text && <span className="switcher__text">{text}</span>}
+      {text && <span className="filter-сheckbox__text">{text}</span>}
     </div>
   )
 }
