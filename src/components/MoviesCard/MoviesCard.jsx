@@ -12,7 +12,7 @@ const MoviesCard = ({ data, isSavedList }) => {
   return (
     <div className='movies-card'>
       <div className='movies-card__header'>
-        <h3 className='movies-card__title'>{nameRU}</h3>
+        <h2 className='movies-card__title'>{nameRU}</h2>
         <p className='movies-card__duration'>{duration} минут</p>
       </div>
       <a
@@ -28,6 +28,7 @@ const MoviesCard = ({ data, isSavedList }) => {
       <div className='movies-card__footer'>
         <button
           onClick={handleButtonClick}
+          type='button'
           className={
             `movie-card__button hover-opacity
             ${isSaved && !isSavedList ? 'movie-card__button_type_red' : ''}`}

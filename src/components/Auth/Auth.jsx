@@ -14,7 +14,7 @@ const Auth = (
   }
 ) => {
   return (
-    <main className="auth container">
+    <section className="auth container">
       <Link to="/">
         <img className="auth__logo" src={logo} alt="Логотип" />
       </Link>
@@ -42,7 +42,7 @@ const Auth = (
           </p>
         </div>
       </form>
-    </main>
+    </section>
   );
 }
 
