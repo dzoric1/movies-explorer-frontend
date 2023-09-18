@@ -58,7 +58,7 @@
 }
 
 @media screen and (max-width: 767px) {
-  .switcher__text {
+  .filter-сheckbox__text {
     font-size: 11px;
     line-height: 18px;
   }
