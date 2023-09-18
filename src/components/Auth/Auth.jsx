@@ -15,7 +15,7 @@ const Auth = (
 ) => {
   return (
     <section className="auth container">
-      <Link to="/">
+      <Link to="/" className='hover-opacity'>
         <img className="auth__logo" src={logo} alt="Логотип" />
       </Link>
       <h1 className="auth__title">{title}</h1>

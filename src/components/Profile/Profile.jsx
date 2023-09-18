@@ -26,7 +26,7 @@ const Profile = () => {
           <form className="profile__form">
             <div className="profile__fields">
               <label className="profile__field">
-                <p className="profile__input-label">Имя</p>
+                <span className="profile__input-label">Имя</span>
                 <input
                   className='profile__input'
                   type="text"
@@ -42,7 +42,7 @@ const Profile = () => {
                 <span className={`profile__error ${errors.name ? 'profile__error_active' : ''}`}>{errors.name}</span>
               </label>
               <label className="profile__field">
-                <p className="profile__input-label">E-mail</p>
+                <span className="profile__input-label">E-mail</span>
                 <input
                   className='profile__input'
                   type="email"
