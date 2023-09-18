@@ -1,0 +1,32 @@
+.header {
+  background-color: #202020;
+}
+
+.header_type_main {
+  background-color: #073042;
+}
+
+.header__container {
+  padding: 18px 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 1023px) {
+  .header__container {
+    padding: 18px 30px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .header__container {
+    padding: 18px 14px;
+  }
+}
+
+.header__logo {
+  width: 38px;
+  object-fit: cover;
+  aspect-ratio: 1/1;
+}
