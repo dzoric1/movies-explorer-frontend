@@ -1,6 +1,6 @@
 import Auth from '../Auth/Auth';
 import AuthInput from '../AuthInput/AuthInput';
-import useValidationForm from "../../utils/useValidationForm";
+import useValidationForm from "../../utils/hooks/useValidationForm";
 import './Register.css'
 
 const Register = () => {

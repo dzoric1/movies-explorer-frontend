@@ -8,8 +8,14 @@ import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 import './App.css';
 
+import mainApi from '../../utils/Api/MainApi';
+import moviesApi from '../../utils/Api/MoviesApi';
+
 
 function App() {
+
+  // console.log(mainApi.registration());
+
   return (
     <Routes>
       <Route path='/' element={<Main />} />

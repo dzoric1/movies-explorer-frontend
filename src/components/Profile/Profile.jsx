@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useValidationForm from "../../utils/useValidationForm";
+import useValidationForm from "../../utils/hooks/useValidationForm";
 import Header from "../Header/Header";
 import './Profile.css'
 
