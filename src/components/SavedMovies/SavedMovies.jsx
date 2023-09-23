@@ -4,9 +4,9 @@ import Search from '../SearchForm/Search';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 
-const SavedMovies = () => (
+const SavedMovies = ({ isLoggedIn }) => (
   <>
-    <Header isAuth={true} />
+    <Header isAuth={true} isLoggedIn={isLoggedIn} />
     <main>
       <Search />
       <MoviesCardList isSavedList={true} />

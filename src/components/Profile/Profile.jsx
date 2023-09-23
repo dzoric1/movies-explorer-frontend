@@ -4,14 +4,11 @@ import useValidationForm from "../../utils/hooks/useValidationForm";
 import Header from "../Header/Header";
 import './Profile.css'
 
-const Profile = () => {
+const Profile = ({ onSignout, isLoggedIn }) => {
   const [isEdit, setIsEdit] = useState(false);
   const { inputValues, errors, isValid, handleChange, setInputValues } = useValidationForm();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    navigate('/');
-  };
 
   useEffect(() => {
     setInputValues({ name: 'Евгений', email: '123@123.ru' });
@@ -19,11 +16,14 @@ const Profile = () => {
 
   return (
     <>
-      <Header isAuth={true} />
+      <Header isAuth={true} isLoggedIn={isLoggedIn} />
       <main className="container">
         <section className="profile">
           <h1 className="profile__title">Привет, {inputValues.name}!</h1>
-          <form className="profile__form">
+          <form
+            className="profile__form"
+            onSubmit={() => console.log('123')}
+          >
             <div className="profile__fields">
               <label className="profile__field">
                 <span className="profile__input-label">Имя</span>
@@ -69,7 +69,7 @@ const Profile = () => {
                     <button
                       className="profile__button profile__button_type_logout hover-opacity"
                       type="button"
-                      onClick={handleLogout}
+                      onClick={onSignout}
                     >
                       Выйти из аккаунта
                     </button>

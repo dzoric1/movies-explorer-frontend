@@ -10,12 +10,14 @@ class Api {
       res = await fetch(url, {
         method,
         headers: this._headers,
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        credentials: 'include',
       });
     } else {
       res = await fetch(url, {
         method,
         headers: this._headers,
+        credentials: 'include',
       });
     }
 

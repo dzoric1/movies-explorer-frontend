@@ -5,14 +5,14 @@ import NavigationAuth from "../NavigationAuth/NavigationAuth";
 import Navigation from "../Navigation/Navigation";
 
 
-const Header = ({ isMainPage = false, isAuth }) => {
+const Header = ({ isMainPage = false, isLoggedIn }) => {
   return (
     <header className={`header ${isMainPage ? 'header_type_main' : ''}`}>
       <div className="header__container container">
         <Link to="/">
           <img className="header__logo hover-opacity" src={headerLogo} alt="логотип" />
         </Link>
-        {isAuth ? <Navigation /> : <NavigationAuth />}
+        {isLoggedIn ? <Navigation /> : <NavigationAuth />}
       </div>
     </header>
   );

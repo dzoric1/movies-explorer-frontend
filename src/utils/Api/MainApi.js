@@ -7,7 +7,7 @@ class MainApi extends Api {
   }
 
   getUserInfo = async () => {
-    return this._doFetch(this._baseUrl, 'GET');
+    return this._doFetch(`${this._baseUrl}/users/me`, 'GET');
   }
 
   updateUserInfo = async (data) => {
