@@ -7,7 +7,10 @@ class MoviesApi extends Api {
   }
 
   getInitialMovies = async () => {
-    return await this._doFetch(this._baseUrl, 'GET');
+    return this._doFetch({
+      url: this._baseUrl,
+      method: 'GET',
+    });
   }
 }
 

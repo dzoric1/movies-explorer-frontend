@@ -4,20 +4,20 @@ class Api {
     this._headers = headers;
   }
 
-  _doFetch = async (url, method, data) => {
+  _doFetch = async ({ url, method, options, data }) => {
     let res;
     if (data) {
       res = await fetch(url, {
         method,
         headers: this._headers,
         body: JSON.stringify(data),
-        credentials: 'include',
+        ...options,
       });
     } else {
       res = await fetch(url, {
         method,
         headers: this._headers,
-        credentials: 'include',
+        ...options,
       });
     }
 

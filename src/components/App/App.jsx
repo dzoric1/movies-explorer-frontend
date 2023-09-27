@@ -7,6 +7,7 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
+import Preloader from '../Preloader/Preloader';
 import mainApi from '../../utils/Api/MainApi';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
@@ -14,9 +15,11 @@ import './App.css';
 
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [authErrorMessage, setAuthErrorMessage] = useState('');
+  const [savedMovies, setSavedMovies] = useState([]);
   const navigate = useNavigate();
 
   const [loginButtonData, setLoginButtonData] = useState({
@@ -54,7 +57,7 @@ function App() {
       })
       .catch(error => {
         setAuthErrorMessage('При входе пользователя произошла ошибка.');
-        console.log(error);
+        console.warn(error);
       })
       .finally(() => {
         setLoginButtonData({ buttonText: 'Войти', block: false });
@@ -62,6 +65,7 @@ function App() {
   };
 
   const handleSignout = () => {
+    setIsLoading(true);
     mainApi.signout()
       .then(() => {
         setIsLoggedIn(false);
@@ -70,74 +74,102 @@ function App() {
       .catch((error) => {
         console.warn(error);
       })
+      .finally(() => setIsLoading(false))
   };
 
+  const handleSaveMovie = (movie) => {
+    mainApi.saveMovieToFavorites(movie)
+      .then((newMovie) => {
+        setSavedMovies([...savedMovies, newMovie])
+      })
+      .catch((error) => {
+        console.warn(error);
+      })
+  };
+
+  const handleDeleteMovie = (movieId) => {
+    mainApi.deleteMovieFromFavorites(movieId)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.warn(error);
+      })
+  }
+
   useEffect(() => {
+    setIsLoading(true);
     mainApi.getUserInfo()
       .then((user) => {
         setCurrentUser(user);
-        setIsLoggedIn(true)
+        setIsLoggedIn(true);
         navigate('/movies', { replace: true });
       })
       .catch((error) => {
         console.warn(error);
       })
+      .finally(() => setIsLoading(false));
   }, [isLoggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <Routes>
-        <Route
-          path='/'
-          element={(
-            <Main
-              isLoggedIn={isLoggedIn}
-            />
-          )}
-        />
-        <Route path='/movies' element={(
-          <ProtectedRoute isLoggedIn={isLoggedIn}>
-            <Movies
-              isLoggedIn={isLoggedIn}
-            />
-          </ProtectedRoute>
-        )} />
-        <Route path='/saved-movies' element={(
-          <ProtectedRoute isLoggedIn={isLoggedIn}>
-            <SavedMovies
-              isLoggedIn={isLoggedIn}
-            />
-          </ProtectedRoute>
-        )} />
-        <Route path='/profile' element={(
-          <ProtectedRoute isLoggedIn={isLoggedIn}>
-            <Profile
-              onSignout={handleSignout}
-              isLoggedIn={isLoggedIn}
-            />
-          </ProtectedRoute>
-        )} />
-        <Route
-          path='/signup'
-          element={(
-            <Register
-              onRegister={handleRegistration}
-              authErrorMessage={authErrorMessage}
-              buttonData={registerButtonData}
-            />)}
-        />
-        <Route
-          path='/signin'
-          element={(
-            <Login
-              onLogin={handleLogin}
-              authErrorMessage={authErrorMessage}
-              buttonData={loginButtonData}
-            />
-          )}
-        />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+      {isLoading ? <Preloader /> : (
+        <Routes>
+          <Route
+            path='/'
+            element={(
+              <Main
+                isLoggedIn={isLoggedIn}
+              />
+            )}
+          />
+          <Route path='/movies' element={(
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <Movies
+                isLoggedIn={isLoggedIn}
+                onSaveMovie={handleSaveMovie}
+                onDeleteMovie={handleDeleteMovie}
+                savedMovies={savedMovies}
+              />
+            </ProtectedRoute>
+          )} />
+          <Route path='/saved-movies' element={(
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <SavedMovies
+                isLoggedIn={isLoggedIn}
+              />
+            </ProtectedRoute>
+          )} />
+          <Route path='/profile' element={(
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <Profile
+                onSignout={handleSignout}
+                isLoggedIn={isLoggedIn}
+              />
+            </ProtectedRoute>
+          )} />
+          <Route
+            path='/signup'
+            element={(
+              <Register
+                onRegister={handleRegistration}
+                authErrorMessage={authErrorMessage}
+                buttonData={registerButtonData}
+              />)}
+          />
+          <Route
+            path='/signin'
+            element={(
+              <Login
+                onLogin={handleLogin}
+                authErrorMessage={authErrorMessage}
+                buttonData={loginButtonData}
+              />
+            )}
+          />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      )}
     </CurrentUserContext.Provider>
   );
 }
