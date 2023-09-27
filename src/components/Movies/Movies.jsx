@@ -18,7 +18,6 @@ const Movies = ({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) => {
   }, []);
 
   const handleClickMovieButton = (movie) => {
-    console.log(movie);
     const savedMovie = savedMovies.find(item => item.movieId === movie.id);
     if (savedMovie) {
       onDeleteMovie(savedMovie._id);

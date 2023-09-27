@@ -66,13 +66,15 @@ const MoviesCardList = ({ isSavedList, movies, onClickMovieButton, savedMovies }
           })}
         </ul>
       ) : <Preloader />}
-      <button
-        className="movies-card-list__btn hover-opacity"
-        type="button"
-        onClick={() => setPage(page + 1)}
-      >
-        Ещё
-      </button>
+      {isSavedList || showMoviesList.length === movies.length ? '' : (
+        <button
+          className="movies-card-list__btn hover-opacity"
+          type="button"
+          onClick={() => setPage(page + 1)}
+        >
+          Ещё
+        </button>
+      )}
     </section>
   );
 }
