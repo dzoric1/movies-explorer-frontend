@@ -1,17 +1,22 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 import useValidationForm from "../../utils/hooks/useValidationForm";
 import Header from "../Header/Header";
 import './Profile.css'
 
-const Profile = ({ onSignout, isLoggedIn }) => {
+const Profile = ({ onSignout, isLoggedIn, onUpdateUserInfo, buttonData, profileErrorMessage }) => {
   const [isEdit, setIsEdit] = useState(false);
   const { inputValues, errors, isValid, handleChange, setInputValues } = useValidationForm();
-  const navigate = useNavigate();
+  const user = useContext(CurrentUserContext);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onUpdateUserInfo(inputValues)
+    setIsEdit(false)
+  };
 
   useEffect(() => {
-    setInputValues({ name: 'Евгений', email: '123@123.ru' });
+    setInputValues({ name: user.name, email: user.email });
   }, []);
 
   return (
@@ -22,7 +27,7 @@ const Profile = ({ onSignout, isLoggedIn }) => {
           <h1 className="profile__title">Привет, {inputValues.name}!</h1>
           <form
             className="profile__form"
-            onSubmit={() => console.log('123')}
+            onSubmit={handleSubmit}
           >
             <div className="profile__fields">
               <label className="profile__field">
@@ -59,12 +64,16 @@ const Profile = ({ onSignout, isLoggedIn }) => {
             <div className="profile__buttons">
               {isEdit ?
                 (
-                  <>
-                    {!isValid && <p className="profile__buttons-error">При обновлении профиля произошла ошибка.</p>}
-                    <button className="profile__button profile__button_type_save hover-opacity" type="submit">Сохранить</button>
-                  </>
+                  <button
+                    className="profile__button profile__button_type_save hover-opacity"
+                    type="submit"
+                    disabled={buttonData.disabled || !isValid}
+                  >
+                    {buttonData.buttonText}
+                  </button>
                 ) : (
                   <>
+                    <p className="profile__buttons-error">{profileErrorMessage}</p>
                     <button className="profile__button hover-opacity" type="button" onClick={() => setIsEdit(!isEdit)}>Редактировать</button>
                     <button
                       className="profile__button profile__button_type_logout hover-opacity"

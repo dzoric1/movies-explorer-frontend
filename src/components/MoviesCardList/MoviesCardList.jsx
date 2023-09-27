@@ -18,7 +18,6 @@ const MoviesCardList = ({ isSavedList, movies, onClickMovieButton, savedMovies }
     return true;
   }
 
-
   useEffect(() => {
     if (windowWidth >= 1280) {
       setInitialCount(12);
@@ -46,7 +45,6 @@ const MoviesCardList = ({ isSavedList, movies, onClickMovieButton, savedMovies }
 
     setShowMoviesList(movies.slice(0, initialCount + page * step));
   }, [initialCount, page, movies]);
-
 
   return (
     <section className='movies-card-list container'>

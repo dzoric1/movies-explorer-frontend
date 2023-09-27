@@ -19,6 +19,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [authErrorMessage, setAuthErrorMessage] = useState('');
+  const [profileErrorMessage, setProfileErrorMessage] = useState('');
   const [savedMovies, setSavedMovies] = useState([]);
   const navigate = useNavigate();
 
@@ -30,9 +31,13 @@ function App() {
     buttonText: 'Зарегистрироваться',
     disabled: false,
   });
+  const [profileButtonData, setProfileButtonData] = useState({
+    buttonText: 'Сохранить',
+    disabled: false,
+  });
 
   const handleRegistration = (data) => {
-    setRegisterButtonData({ buttonText: 'Регистрация...', block: true });
+    setRegisterButtonData({ buttonText: 'Регистрация...', disabled: true });
     mainApi.registration(data)
       .then(() => {
         setAuthErrorMessage('');
@@ -43,12 +48,12 @@ function App() {
         console.warn(error);
       })
       .finally(() => {
-        setRegisterButtonData({ buttonText: 'Зарегистрироваться', block: false });
+        setRegisterButtonData({ buttonText: 'Зарегистрироваться', disabled: false });
       })
   };
 
   const handleLogin = (data) => {
-    setLoginButtonData({ buttonText: 'Вход...', block: true });
+    setLoginButtonData({ buttonText: 'Вход...', disabled: true });
     mainApi.login(data)
       .then((data) => {
         setAuthErrorMessage('');
@@ -60,7 +65,7 @@ function App() {
         console.warn(error);
       })
       .finally(() => {
-        setLoginButtonData({ buttonText: 'Войти', block: false });
+        setLoginButtonData({ buttonText: 'Войти', disabled: false });
       })
   };
 
@@ -96,6 +101,22 @@ function App() {
         console.warn(error);
       })
   }
+
+  const handleUpdateUserInfo = (userInfo) => {
+    setProfileErrorMessage('');
+    setProfileButtonData({ buttonText: 'Сохранение...', disabled: true });
+    mainApi.updateUserInfo(userInfo)
+      .then((user) => {
+        setCurrentUser(user)
+      })
+      .catch((error) => {
+        setProfileErrorMessage('При обновлении профиля произошла ошибка.');
+        console.warn(error);
+      })
+      .finally(() => {
+        setProfileButtonData({ buttonText: 'Сохранить', disabled: false });
+      })
+  };
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -161,6 +182,9 @@ function App() {
               <Profile
                 onSignout={handleSignout}
                 isLoggedIn={isLoggedIn}
+                buttonData={profileButtonData}
+                onUpdateUserInfo={handleUpdateUserInfo}
+                profileErrorMessage={profileErrorMessage}
               />
             </ProtectedRoute>
           )} />
