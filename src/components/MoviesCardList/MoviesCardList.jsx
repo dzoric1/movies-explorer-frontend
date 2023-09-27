@@ -3,12 +3,20 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
 import './MoviesCardList.css'
 
-const MoviesCardList = ({ isSavedList, movies, onClickMovieButton }) => {
+const MoviesCardList = ({ isSavedList, movies, onClickMovieButton, savedMovies }) => {
   const [showMoviesList, setShowMoviesList] = useState([]);
   const [initialCount, setInitialCount] = useState(Number);
   const [step, setStep] = useState(Number);
   const [page, setPage] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const isSaved = (movie) => {
+    if (!isSavedList) {
+      const savedMovie = savedMovies.find(item => item.movieId === movie.id);
+      return !!savedMovie;
+    }
+    return true;
+  }
 
 
   useEffect(() => {
@@ -23,7 +31,6 @@ const MoviesCardList = ({ isSavedList, movies, onClickMovieButton }) => {
       setStep(1);
     }
   }, [windowWidth]);
-
 
   useEffect(() => {
     const callback = (e) => setWindowWidth(e.target.innerWidth);
@@ -47,11 +54,12 @@ const MoviesCardList = ({ isSavedList, movies, onClickMovieButton }) => {
         <ul className='movies-card-list__list list-reset'>
           {showMoviesList.map(movie => {
             return (
-              <li className='movies-card-list__list-item' key={movie.id}>
+              <li className='movies-card-list__list-item' key={movie.id ?? movie.movieId}>
                 <MoviesCard
                   data={movie}
                   isSavedList={isSavedList}
                   onClickMovieButton={() => onClickMovieButton(movie)}
+                  isSaved={isSaved(movie)}
                 />
               </li>
             )

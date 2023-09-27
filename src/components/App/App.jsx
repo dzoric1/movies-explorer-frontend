@@ -1,5 +1,5 @@
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
@@ -89,13 +89,27 @@ function App() {
 
   const handleDeleteMovie = (movieId) => {
     mainApi.deleteMovieFromFavorites(movieId)
-      .then((data) => {
-        console.log(data);
+      .then(() => {
+        setSavedMovies(savedMovies.filter(({ _id }) => _id !== movieId));
       })
       .catch((error) => {
         console.warn(error);
       })
   }
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      setIsLoading(true);
+      mainApi.getFavoritesMovies()
+        .then((savedMovies) => {
+          setSavedMovies(savedMovies);
+        })
+        .catch((error) => {
+          console.warn(error);
+        })
+        .finally(() => setIsLoading(false));
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -137,6 +151,8 @@ function App() {
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <SavedMovies
                 isLoggedIn={isLoggedIn}
+                onDeleteMovie={handleDeleteMovie}
+                savedMovies={savedMovies}
               />
             </ProtectedRoute>
           )} />

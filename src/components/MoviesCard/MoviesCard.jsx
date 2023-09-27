@@ -1,14 +1,7 @@
-import { useState } from 'react';
 import './MoviesCard.css';
 
 const MoviesCard = ({ data, isSavedList, onClickMovieButton, isSaved }) => {
   const { nameRU, duration, image, trailerLink } = data;
-  // const [isSaved, setIsSaved] = useState(false);
-
-  const handleButtonClick = () => {
-    // setIsSaved(!isSaved)
-    onClickMovieButton()
-  };
 
 
   return (
@@ -29,7 +22,7 @@ const MoviesCard = ({ data, isSavedList, onClickMovieButton, isSaved }) => {
       </a>
       <div className='movies-card__footer'>
         <button
-          onClick={handleButtonClick}
+          onClick={onClickMovieButton}
           type='button'
           className={
             `movies-card__footer-button hover-opacity
