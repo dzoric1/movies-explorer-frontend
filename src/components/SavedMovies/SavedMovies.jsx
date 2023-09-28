@@ -3,20 +3,35 @@ import Header from '../Header/Header';
 import Search from '../SearchForm/Search';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
+import movieFilter from '../../utils/movieFilter';
 import './SavedMovies.css';
 
 const SavedMovies = ({ isLoggedIn, savedMovies, onDeleteMovie }) => {
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [searchInputValue, setSearchInputValue] = useState('');
 
   const handleClickMovieButton = (movie) => {
     onDeleteMovie(movie._id);
   }
 
+  const handleChangeSearchInputValue = (value) => {
+    setSearchInputValue(value);
+    setFilteredMovies(movieFilter(savedMovies, value));
+  }
+
+  useEffect(() => {
+    setFilteredMovies(movieFilter(savedMovies, searchInputValue))
+  }, [])
+
   return (
     <>
       <Header isAuth={true} isLoggedIn={isLoggedIn} />
       <main>
-        <Search />
-        <MoviesCardList isSavedList={true} movies={savedMovies} onClickMovieButton={handleClickMovieButton} />
+        <Search
+          searchInputValue={searchInputValue}
+          onChangeSearchInputValue={handleChangeSearchInputValue}
+        />
+        <MoviesCardList isSavedList={true} movies={filteredMovies} onClickMovieButton={handleClickMovieButton} />
       </main>
       <Footer />
     </>

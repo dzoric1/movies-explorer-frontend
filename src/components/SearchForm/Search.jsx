@@ -2,11 +2,21 @@ import { useState } from 'react';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import './Search.css';
 
-const Search = ({ searchInputValue, onChangeSearchInputValue }) => {
+const Search = (
+  {
+    searchInputValue,
+    onChangeSearchInputValue,
+    isShorts,
+    onChangeShortsChexbox,
+  }
+) => {
+  const onSubmit = (e) => {
+    e.preventDefault();
+  }
 
   return (
     <section className="search container">
-      <form className='search__form'>
+      <form className='search__form' onSubmit={onSubmit}>
         <div className='search__input-wrapper'>
           <input
             className='search__input'
@@ -24,7 +34,11 @@ const Search = ({ searchInputValue, onChangeSearchInputValue }) => {
             Поиск
           </button>
         </div>
-        <FilterCheckbox text='Короткометражки' />
+        <FilterCheckbox
+          checked={isShorts}
+          onChange={onChangeShortsChexbox}
+          text='Короткометражки'
+        />
       </form>
     </section>
   )
