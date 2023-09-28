@@ -8,11 +8,14 @@ import './Movies.css';
 
 const Movies = ({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) => {
   const [moviesList, setMoviesList] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [searchInputValue, setSearchInputValue] = useState('');
 
   useEffect(() => {
     moviesApi.getInitialMovies()
       .then(data => {
         setMoviesList(data);
+        setFilteredMovies(data, searchInputValue);
       })
       .catch(error => console.log(error));
   }, []);
@@ -26,14 +29,29 @@ const Movies = ({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) => {
     onSaveMovie(movie);
   };
 
+  const handleFilterMovies = (movies, value) => {
+    const filteredMovies = movies.filter(({ nameRU, nameEN }) => {
+      return nameRU.toLowerCase().includes(value.toLowerCase()) || nameEN.toLowerCase().includes(value.toLowerCase())
+    })
+    return filteredMovies
+  }
+
+  const handleChangeSearchInputValue = (value) => {
+    setSearchInputValue(value);
+    setFilteredMovies(handleFilterMovies(moviesList, value));
+  }
+
   return (
     <>
       <Header isLoggedIn={isLoggedIn} />
       <main>
-        <Search />
+        <Search
+          searchInputValue={searchInputValue}
+          onChangeSearchInputValue={handleChangeSearchInputValue}
+        />
         <MoviesCardList
           isSavedList={false}
-          movies={moviesList}
+          movies={filteredMovies}
           onClickMovieButton={handleClickMovieButton}
           savedMovies={savedMovies}
         />
