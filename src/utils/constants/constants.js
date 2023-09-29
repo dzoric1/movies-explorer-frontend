@@ -1,6 +1,6 @@
 const mainApiSettings = {
-  // baseUrl: 'https://api.movies.dzoric1.nomoreparties.co',
-  baseUrl: 'http://localhost:3001',
+  baseUrl: 'https://api.movies.dzoric1.nomoreparties.co',
+  // baseUrl: 'http://localhost:3001',
   headers: {
     'Content-Type': 'application/json',
   },
