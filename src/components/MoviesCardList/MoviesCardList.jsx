@@ -3,7 +3,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
 import './MoviesCardList.css'
 
-const MoviesCardList = ({ isSavedList, movies, onClickMovieButton, savedMovies }) => {
+const MoviesCardList = ({ isSavedList, movies, onClickMovieButton, savedMovies, isLoading }) => {
   const [showMoviesList, setShowMoviesList] = useState([]);
   const [initialCount, setInitialCount] = useState(Number);
   const [step, setStep] = useState(Number);
@@ -48,9 +48,9 @@ const MoviesCardList = ({ isSavedList, movies, onClickMovieButton, savedMovies }
 
   return (
     <section className='movies-card-list container'>
-      {showMoviesList.length > 0 ? (
+      {!isLoading ? (
         <ul className='movies-card-list__list list-reset'>
-          {showMoviesList.map(movie => {
+          {showMoviesList.length > 0 ? showMoviesList.map(movie => {
             return (
               <li className='movies-card-list__list-item' key={movie.id ?? movie.movieId}>
                 <MoviesCard
@@ -61,7 +61,7 @@ const MoviesCardList = ({ isSavedList, movies, onClickMovieButton, savedMovies }
                 />
               </li>
             )
-          })}
+          }) : <p className='movies-card-list__not-found'>Фильмы не найдены</p>}
         </ul>
       ) : <Preloader />}
       {isSavedList || showMoviesList.length === movies.length ? '' : (

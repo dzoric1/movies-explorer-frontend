@@ -14,6 +14,18 @@
   }
 }
 
+.movies-card-list__not-found {
+  text-align: center;
+  grid-column: 1/4;
+  margin: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .movies-card-list__not-found {
+    grid-column: 1/2;
+  }
+}
+
 .movies-card-list__list {
   display: grid;
   grid-template-columns: repeat(3, minmax(300px, 1fr));

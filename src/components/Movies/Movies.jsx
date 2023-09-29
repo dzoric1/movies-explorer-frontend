@@ -7,21 +7,24 @@ import moviesApi from '../../utils/Api/MoviesApi';
 import movieFilter from '../../utils/movieFilter';
 import './Movies.css';
 
-const Movies = ({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) => {
+const Movies = ({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies, isLoading }) => {
   const savedIsShorts = JSON.parse(localStorage.getItem('isShorts')) ?? false;
   const savedSearchValue = JSON.parse(localStorage.getItem('searchValue')) ?? '';
   const [moviesList, setMoviesList] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [searchInputValue, setSearchInputValue] = useState(savedSearchValue);
   const [isShorts, setIsShorts] = useState(savedIsShorts);
+  const [isLoadingMovies, setIsLoadingMovies] = useState(false);
 
   useEffect(() => {
+    setIsLoadingMovies(true);
     moviesApi.getInitialMovies()
       .then(data => {
         setMoviesList(data);
         setFilteredMovies(movieFilter(data, searchInputValue, isShorts));
       })
-      .catch(error => console.log(error));
+      .catch(error => console.log(error))
+      .finally(() => setIsLoadingMovies(false))
   }, []);
 
   useEffect(() => {
@@ -63,6 +66,7 @@ const Movies = ({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) => {
           movies={filteredMovies}
           onClickMovieButton={handleClickMovieButton}
           savedMovies={savedMovies}
+          isLoading={isLoadingMovies}
         />
       </main>
       <Footer />

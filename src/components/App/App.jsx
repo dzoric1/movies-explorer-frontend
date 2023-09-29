@@ -16,6 +16,7 @@ import './App.css';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingSavedMovies, setIsLoadingSavedMovies] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [authErrorMessage, setAuthErrorMessage] = useState('');
@@ -121,7 +122,7 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      setIsLoading(true);
+      setIsLoadingSavedMovies(true);
       mainApi.getFavoritesMovies()
         .then((savedMovies) => {
           setSavedMovies(savedMovies);
@@ -129,7 +130,7 @@ function App() {
         .catch((error) => {
           console.warn(error);
         })
-        .finally(() => setIsLoading(false));
+        .finally(() => setIsLoadingSavedMovies(false));
     }
   }, [isLoggedIn]);
 
@@ -166,6 +167,7 @@ function App() {
                 onSaveMovie={handleSaveMovie}
                 onDeleteMovie={handleDeleteMovie}
                 savedMovies={savedMovies}
+                isLoading={isLoading}
               />
             </ProtectedRoute>
           )} />
@@ -175,6 +177,7 @@ function App() {
                 isLoggedIn={isLoggedIn}
                 onDeleteMovie={handleDeleteMovie}
                 savedMovies={savedMovies}
+                isLoadingSavedMovies={isLoadingSavedMovies}
               />
             </ProtectedRoute>
           )} />
