@@ -74,6 +74,7 @@ function App() {
     mainApi.signout()
       .then(() => {
         setIsLoggedIn(false);
+        localStorage.clear();
         navigate('/signin', { replace: true });
       })
       .catch((error) => {
