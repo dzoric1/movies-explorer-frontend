@@ -8,10 +8,12 @@ import movieFilter from '../../utils/movieFilter';
 import './Movies.css';
 
 const Movies = ({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) => {
+  const savedIsShorts = JSON.parse(localStorage.getItem('isShorts')) ?? false;
+  const savedSearchValue = JSON.parse(localStorage.getItem('searchValue')) ?? '';
   const [moviesList, setMoviesList] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [searchInputValue, setSearchInputValue] = useState('');
-  const [isShorts, setIsShorts] = useState(false);
+  const [searchInputValue, setSearchInputValue] = useState(savedSearchValue);
+  const [isShorts, setIsShorts] = useState(savedIsShorts);
 
   useEffect(() => {
     moviesApi.getInitialMovies()
@@ -35,8 +37,14 @@ const Movies = ({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) => {
     onSaveMovie(movie);
   };
 
+  const handleIsShorts = () => {
+    setIsShorts(!isShorts);
+    localStorage.setItem('isShorts', JSON.stringify(!isShorts));
+  };
+
   const handleChangeSearchInputValue = (value) => {
     setSearchInputValue(value);
+    localStorage.setItem('searchValue', JSON.stringify(value));
     setFilteredMovies(movieFilter(moviesList, value, isShorts));
   }
 
@@ -48,7 +56,7 @@ const Movies = ({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) => {
           searchInputValue={searchInputValue}
           onChangeSearchInputValue={handleChangeSearchInputValue}
           isShorts={isShorts}
-          onChangeShortsChexbox={() => setIsShorts(!isShorts)}
+          onChangeShortsChexbox={handleIsShorts}
         />
         <MoviesCardList
           isSavedList={false}
