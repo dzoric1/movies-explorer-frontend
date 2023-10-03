@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import useValidationForm from "../../utils/hooks/useValidationForm";
 import Header from "../Header/Header";
+import { REGEX_EMAIL } from '../../utils/constants/constants';
 import './Profile.css'
 
 const Profile = ({ onSignout, isLoggedIn, onUpdateUserInfo, buttonData, profileErrorMessage }) => {
@@ -57,6 +58,7 @@ const Profile = ({ onSignout, isLoggedIn, onUpdateUserInfo, buttonData, profileE
                   value={inputValues.email || ''}
                   onChange={handleChange}
                   disabled={!isEdit}
+                  pattern={REGEX_EMAIL}
                 />
                 <span className={`profile__error ${errors.email ? 'profile__error_active' : ''}`}>{errors.email}</span>
               </label>

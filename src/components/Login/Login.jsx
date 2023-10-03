@@ -1,6 +1,7 @@
 import Auth from '../Auth/Auth';
 import AuthInput from '../AuthInput/AuthInput';
 import useValidationForm from "../../utils/hooks/useValidationForm";
+import { REGEX_EMAIL } from '../../utils/constants/constants';
 import './Login.css'
 
 const Login = ({ onLogin, authErrorMessage, buttonData }) => {
@@ -31,6 +32,7 @@ const Login = ({ onLogin, authErrorMessage, buttonData }) => {
           value={inputValues.email || ''}
           error={errors.email}
           handleChange={handleChange}
+          pattern={REGEX_EMAIL}
         />
         <AuthInput
           type='password'

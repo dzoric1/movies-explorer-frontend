@@ -1,7 +1,8 @@
 import Auth from '../Auth/Auth';
 import AuthInput from '../AuthInput/AuthInput';
 import useValidationForm from "../../utils/hooks/useValidationForm";
-import './Register.css'
+import { REGEX_EMAIL } from '../../utils/constants/constants';
+import './Register.css';
 
 const Register = ({ onRegister, authErrorMessage, buttonData }) => {
   const { inputValues, errors, isValid, handleChange } = useValidationForm();
@@ -41,6 +42,7 @@ const Register = ({ onRegister, authErrorMessage, buttonData }) => {
           value={inputValues.email || ''}
           error={errors.email}
           handleChange={handleChange}
+          pattern={REGEX_EMAIL}
         />
         <AuthInput
           type='password'
