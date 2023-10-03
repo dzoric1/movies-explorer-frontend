@@ -157,9 +157,13 @@
   font-weight: 500;
 }
 
-.profile__buttons-error {
-  color: #ee3465;
+.profile__buttons-message {
+  color: #2be080;
   text-align: center;
   font-size: 11px;
   line-height: normal;
+}
+
+.profile__buttons-message_type_error {
+  color: #ee3465;
 }

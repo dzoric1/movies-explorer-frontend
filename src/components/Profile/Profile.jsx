@@ -5,20 +5,29 @@ import Header from "../Header/Header";
 import { REGEX_EMAIL } from '../../utils/constants/constants';
 import './Profile.css'
 
-const Profile = ({ onSignout, isLoggedIn, onUpdateUserInfo, buttonData, profileErrorMessage }) => {
+const Profile = ({
+  onSignout,
+  isLoggedIn,
+  onUpdateUserInfo,
+  buttonData,
+  profileMessageData,
+  setProfileMessageData }) => {
   const [isEdit, setIsEdit] = useState(false);
   const { inputValues, errors, isValid, handleChange, setInputValues } = useValidationForm();
   const user = useContext(CurrentUserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onUpdateUserInfo(inputValues)
-    setIsEdit(false)
+    if (!(user.name === inputValues.name && user.email === inputValues.email)) {
+      onUpdateUserInfo(inputValues);
+    }
+    setIsEdit(false);
   };
 
   useEffect(() => {
+    setProfileMessageData({ text: '', isError: false });
     setInputValues({ name: user.name, email: user.email });
-  }, []);
+  }, [isEdit]);
 
   return (
     <>
@@ -75,7 +84,15 @@ const Profile = ({ onSignout, isLoggedIn, onUpdateUserInfo, buttonData, profileE
                   </button>
                 ) : (
                   <>
-                    <p className="profile__buttons-error">{profileErrorMessage}</p>
+                    <p
+                      className={
+                        `profile__buttons-message 
+                        ${profileMessageData.isError ?
+                          'profile__buttons-message_type_error' :
+                          ''}`
+                      }>
+                      {profileMessageData.text}
+                    </p>
                     <button className="profile__button hover-opacity" type="button" onClick={() => setIsEdit(!isEdit)}>Редактировать</button>
                     <button
                       className="profile__button profile__button_type_logout hover-opacity"

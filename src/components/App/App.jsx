@@ -20,7 +20,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [authErrorMessage, setAuthErrorMessage] = useState('');
-  const [profileErrorMessage, setProfileErrorMessage] = useState('');
+  const [profileMessageData, setProfileMessageData] = useState({ text: '', isError: false });
   const [savedMovies, setSavedMovies] = useState([]);
   const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ function App() {
     mainApi.registration(data)
       .then(() => {
         setAuthErrorMessage('');
-        navigate('/signin', { replace: true });
+        handleLogin({ email: data.email, password: data.password });
       })
       .catch(error => {
         setAuthErrorMessage('При регистрации пользователя произошла ошибка.');
@@ -87,7 +87,7 @@ function App() {
   const handleSaveMovie = (movie) => {
     mainApi.saveMovieToFavorites(movie)
       .then((newMovie) => {
-        setSavedMovies([...savedMovies, newMovie])
+        setSavedMovies([...savedMovies, newMovie]);
       })
       .catch((error) => {
         console.warn(error);
@@ -105,14 +105,21 @@ function App() {
   }
 
   const handleUpdateUserInfo = (userInfo) => {
-    setProfileErrorMessage('');
+    setProfileMessageData({ text: '', isError: false });
     setProfileButtonData({ buttonText: 'Сохранение...', disabled: true });
     mainApi.updateUserInfo(userInfo)
       .then((user) => {
-        setCurrentUser(user)
+        setCurrentUser(user);
+        setProfileMessageData({
+          text: 'Профиль успешно обновлен',
+          isError: false,
+        });
       })
       .catch((error) => {
-        setProfileErrorMessage('При обновлении профиля произошла ошибка.');
+        setProfileMessageData({
+          text: 'При обновлении профиля произошла ошибка.',
+          isError: true,
+        });
         console.warn(error);
       })
       .finally(() => {
@@ -188,7 +195,8 @@ function App() {
                 isLoggedIn={isLoggedIn}
                 buttonData={profileButtonData}
                 onUpdateUserInfo={handleUpdateUserInfo}
-                profileErrorMessage={profileErrorMessage}
+                profileMessageData={profileMessageData}
+                setProfileMessageData={setProfileMessageData}
               />
             </ProtectedRoute>
           )} />
