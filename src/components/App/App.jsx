@@ -174,7 +174,6 @@ function App() {
                 onSaveMovie={handleSaveMovie}
                 onDeleteMovie={handleDeleteMovie}
                 savedMovies={savedMovies}
-                isLoading={isLoading}
               />
             </ProtectedRoute>
           )} />

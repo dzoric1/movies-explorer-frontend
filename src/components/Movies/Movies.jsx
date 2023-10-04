@@ -7,7 +7,7 @@ import moviesApi from '../../utils/Api/MoviesApi';
 import movieFilter from '../../utils/movieFilter';
 import './Movies.css';
 
-const Movies = ({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies, isLoading }) => {
+const Movies = ({ isLoggedIn, onSaveMovie, onDeleteMovie, savedMovies }) => {
   const savedIsShorts = JSON.parse(localStorage.getItem('isShorts')) ?? false;
   const savedSearchValue = JSON.parse(localStorage.getItem('searchValue')) ?? '';
   const [moviesList, setMoviesList] = useState([]);
