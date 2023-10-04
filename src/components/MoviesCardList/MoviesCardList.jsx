@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
+import {
+  MOVIES_PER_PAGE_1280,
+  MOVIES_PER_PAGE_768,
+  MOVIES_PER_PAGE_320
+} from '../../utils/constants/constants';
 import './MoviesCardList.css'
 
 const MoviesCardList = ({ isSavedList, movies, onClickMovieButton, savedMovies, isLoading }) => {
@@ -20,14 +25,14 @@ const MoviesCardList = ({ isSavedList, movies, onClickMovieButton, savedMovies, 
 
   useEffect(() => {
     if (windowWidth >= 1280) {
-      setInitialCount(12);
-      setStep(3);
+      setInitialCount(MOVIES_PER_PAGE_1280.initial);
+      setStep(MOVIES_PER_PAGE_1280.step);
     } else if (windowWidth >= 768) {
-      setInitialCount(8);
-      setStep(2);
+      setInitialCount(MOVIES_PER_PAGE_768.initial);
+      setStep(MOVIES_PER_PAGE_768.step);
     } else {
-      setInitialCount(5);
-      setStep(1);
+      setInitialCount(MOVIES_PER_PAGE_320.initial);
+      setStep(MOVIES_PER_PAGE_320.step);
     }
   }, [windowWidth]);
 

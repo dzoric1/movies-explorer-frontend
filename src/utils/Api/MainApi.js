@@ -1,5 +1,5 @@
 import Api from './Api';
-import { mainApiSettings } from '../constants/constants';
+import { mainApiSettings } from '../constants/apiSettings';
 
 class MainApi extends Api {
   constructor({ baseUrl, headers }) {

@@ -1,5 +1,5 @@
 import Api from './Api';
-import { moviesApiSettings } from '../constants/constants';
+import { moviesApiSettings } from '../constants/apiSettings';
 
 class MoviesApi extends Api {
   constructor({ baseUrl, headers }) {
