@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -23,6 +23,7 @@ function App() {
   const [profileMessageData, setProfileMessageData] = useState({ text: '', isError: false });
   const [savedMovies, setSavedMovies] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [loginButtonData, setLoginButtonData] = useState({
     buttonText: 'Войти',
@@ -59,6 +60,7 @@ function App() {
       .then((data) => {
         setAuthErrorMessage('');
         setIsLoggedIn(true);
+        navigate('/movies', { replace: true });
         console.log(data);
       })
       .catch(error => {
@@ -76,7 +78,7 @@ function App() {
       .then(() => {
         setIsLoggedIn(false);
         localStorage.clear();
-        navigate('/signin', { replace: true });
+        navigate('/', { replace: true });
       })
       .catch((error) => {
         console.warn(error);
@@ -147,7 +149,7 @@ function App() {
       .then((user) => {
         setCurrentUser(user);
         setIsLoggedIn(true);
-        navigate('/movies', { replace: true });
+        navigate(location, { replace: true });
       })
       .catch((error) => {
         console.warn(error);
@@ -201,22 +203,27 @@ function App() {
           )} />
           <Route
             path='/signup'
-            element={(
-              <Register
-                onRegister={handleRegistration}
-                authErrorMessage={authErrorMessage}
-                buttonData={registerButtonData}
-              />)}
+            element={isLoggedIn
+              ? <Navigate to='/movies' /> : (
+                <Register
+                  onRegister={handleRegistration}
+                  authErrorMessage={authErrorMessage}
+                  buttonData={registerButtonData}
+                />
+              )
+            }
           />
           <Route
             path='/signin'
-            element={(
-              <Login
-                onLogin={handleLogin}
-                authErrorMessage={authErrorMessage}
-                buttonData={loginButtonData}
-              />
-            )}
+            element={isLoggedIn
+              ? <Navigate to='/movies' /> : (
+                <Login
+                  onLogin={handleLogin}
+                  authErrorMessage={authErrorMessage}
+                  buttonData={loginButtonData}
+                />
+              )
+            }
           />
           <Route path='*' element={<NotFound />} />
         </Routes>

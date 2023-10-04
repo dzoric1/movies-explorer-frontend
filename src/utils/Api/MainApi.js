@@ -12,6 +12,7 @@ class MainApi extends Api {
       method: 'GET',
       options: {
         credentials: 'include',
+        cache: 'no-cache',
       },
     });
   }
