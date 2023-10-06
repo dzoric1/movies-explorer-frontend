@@ -28,7 +28,7 @@ const Auth = (
         <div className='auth__form-footer'>
           <p className='auth__error'>{errorMessage}</p>
           <button
-            className="auth__submit hover-opacity"
+            className={`auth__submit hover-opacity ${!isValid ? 'auth__submit_disabled' : ''}`}
             type="submit"
             disabled={!isValid || buttonData.disabled}
           >

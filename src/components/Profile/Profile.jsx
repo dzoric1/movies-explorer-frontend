@@ -25,8 +25,11 @@ const Profile = ({
   };
 
   useEffect(() => {
-    setProfileMessageData({ text: '', isError: false });
     setInputValues({ name: user.name, email: user.email });
+  }, [user]);
+
+  useEffect(() => {
+    setProfileMessageData({ text: '', isError: false });
   }, [isEdit]);
 
   return (
@@ -76,7 +79,11 @@ const Profile = ({
               {isEdit ?
                 (
                   <button
-                    className="profile__button profile__button_type_save hover-opacity"
+                    className={
+                      `profile__button profile__button_type_save hover-opacity
+                      ${!isValid ? 'profile__button_type_disabled-save' : ''}
+                      `
+                    }
                     type="submit"
                     disabled={buttonData.disabled || !isValid}
                   >
@@ -108,7 +115,6 @@ const Profile = ({
         </section>
       </main>
     </>
-
   );
 }
 
