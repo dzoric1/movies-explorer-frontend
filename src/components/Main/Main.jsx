@@ -7,9 +7,9 @@ import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
 import './Main.css';
 
-const Main = () => (
+const Main = ({ isLoggedIn }) => (
   <>
-    <Header isMainPage={true} isAuth={true} />
+    <Header isMainPage={true} isLoggedIn={isLoggedIn} />
     <main>
       <Promo />
       <AboutProject />

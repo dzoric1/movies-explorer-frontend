@@ -1,10 +1,16 @@
 import Auth from '../Auth/Auth';
 import AuthInput from '../AuthInput/AuthInput';
-import useValidationForm from "../../utils/useValidationForm";
+import useValidationForm from "../../utils/hooks/useValidationForm";
+import { REGEX_EMAIL } from '../../utils/constants/constants';
 import './Login.css'
 
-const Login = () => {
+const Login = ({ onLogin, authErrorMessage, buttonData }) => {
   const { inputValues, errors, isValid, handleChange } = useValidationForm();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onLogin(inputValues);
+  };
 
   return (
     <main>
@@ -15,20 +21,24 @@ const Login = () => {
         bottomLink='/signup'
         submitButtonText='Войти'
         isValid={isValid}
+        onSubmit={handleSubmit}
+        buttonData={buttonData}
+        errorMessage={authErrorMessage}
       >
         <AuthInput
           type='email'
           label='E-mail'
           name='email'
-          value={inputValues.email}
+          value={inputValues.email || ''}
           error={errors.email}
           handleChange={handleChange}
+          pattern={REGEX_EMAIL}
         />
         <AuthInput
           type='password'
           label='Пароль'
           name='password'
-          value={inputValues.password}
+          value={inputValues.password || ''}
           minLength='8'
           maxLength='30'
           error={errors.password}

@@ -8,9 +8,11 @@ const Auth = (
     bottomText,
     bottomLinkText,
     bottomLink,
-    submitButtonText,
     children,
     isValid,
+    onSubmit,
+    buttonData,
+    errorMessage,
   }
 ) => {
   return (
@@ -19,17 +21,18 @@ const Auth = (
         <img className="auth__logo" src={logo} alt="Логотип" />
       </Link>
       <h1 className="auth__title">{title}</h1>
-      <form className="auth__form">
+      <form className="auth__form" onSubmit={onSubmit}>
         <div className='auth__form-inputs'>
           {children}
         </div>
         <div className='auth__form-footer'>
+          <p className='auth__error'>{errorMessage}</p>
           <button
-            className="auth__submit hover-opacity"
+            className={`auth__submit hover-opacity ${!isValid ? 'auth__submit_disabled' : ''}`}
             type="submit"
-            disabled={!isValid}
+            disabled={!isValid || buttonData.disabled}
           >
-            {submitButtonText}
+            {buttonData.buttonText}
           </button>
           <p className='auth__bottom-text'>
             {bottomText}

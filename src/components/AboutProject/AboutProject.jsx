@@ -1,6 +1,5 @@
 import './AboutProject.css'
 
-
 const AboutProject = () => {
   return (
     <section className="about-project container" id="about">

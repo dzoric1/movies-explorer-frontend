@@ -1,13 +1,8 @@
-import { useState } from 'react';
 import './MoviesCard.css';
 
-const MoviesCard = ({ data, isSavedList }) => {
+const MoviesCard = ({ data, isSavedList, onClickMovieButton, isSaved }) => {
   const { nameRU, duration, image, trailerLink } = data;
-  const [isSaved, setIsSaved] = useState(false);
 
-  const handleButtonClick = () => {
-    setIsSaved(!isSaved)
-  };
 
   return (
     <div className='movies-card'>
@@ -22,12 +17,12 @@ const MoviesCard = ({ data, isSavedList }) => {
       >
         <img
           className='movies-card__image'
-          src={image}
+          src={!isSavedList ? `https://api.nomoreparties.co/${image.url}` : image}
           alt={nameRU} />
       </a>
       <div className='movies-card__footer'>
         <button
-          onClick={handleButtonClick}
+          onClick={onClickMovieButton}
           type='button'
           className={
             `movies-card__footer-button hover-opacity

@@ -1,29 +1,47 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import useValidationForm from "../../utils/useValidationForm";
+import { useState, useEffect, useContext } from "react";
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+import useValidationForm from "../../utils/hooks/useValidationForm";
 import Header from "../Header/Header";
+import { REGEX_EMAIL } from '../../utils/constants/constants';
 import './Profile.css'
 
-const Profile = () => {
+const Profile = ({
+  onSignout,
+  isLoggedIn,
+  onUpdateUserInfo,
+  buttonData,
+  profileMessageData,
+  setProfileMessageData }) => {
   const [isEdit, setIsEdit] = useState(false);
   const { inputValues, errors, isValid, handleChange, setInputValues } = useValidationForm();
-  const navigate = useNavigate();
+  const user = useContext(CurrentUserContext);
 
-  const handleLogout = () => {
-    navigate('/');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!(user.name === inputValues.name && user.email === inputValues.email)) {
+      onUpdateUserInfo(inputValues);
+    }
+    setIsEdit(false);
   };
 
   useEffect(() => {
-    setInputValues({ name: 'Евгений', email: '123@123.ru' });
-  }, []);
+    setInputValues({ name: user.name, email: user.email });
+  }, [user]);
+
+  useEffect(() => {
+    setProfileMessageData({ text: '', isError: false });
+  }, [isEdit]);
 
   return (
     <>
-      <Header isAuth={true} />
+      <Header isAuth={true} isLoggedIn={isLoggedIn} />
       <main className="container">
         <section className="profile">
           <h1 className="profile__title">Привет, {inputValues.name}!</h1>
-          <form className="profile__form">
+          <form
+            className="profile__form"
+            onSubmit={handleSubmit}
+          >
             <div className="profile__fields">
               <label className="profile__field">
                 <span className="profile__input-label">Имя</span>
@@ -52,6 +70,7 @@ const Profile = () => {
                   value={inputValues.email || ''}
                   onChange={handleChange}
                   disabled={!isEdit}
+                  pattern={REGEX_EMAIL}
                 />
                 <span className={`profile__error ${errors.email ? 'profile__error_active' : ''}`}>{errors.email}</span>
               </label>
@@ -59,17 +78,33 @@ const Profile = () => {
             <div className="profile__buttons">
               {isEdit ?
                 (
-                  <>
-                    {!isValid && <p className="profile__buttons-error">При обновлении профиля произошла ошибка.</p>}
-                    <button className="profile__button profile__button_type_save hover-opacity" type="submit">Сохранить</button>
-                  </>
+                  <button
+                    className={
+                      `profile__button profile__button_type_save hover-opacity
+                      ${!isValid ? 'profile__button_type_disabled-save' : ''}
+                      `
+                    }
+                    type="submit"
+                    disabled={buttonData.disabled || !isValid}
+                  >
+                    {buttonData.buttonText}
+                  </button>
                 ) : (
                   <>
+                    <p
+                      className={
+                        `profile__buttons-message 
+                        ${profileMessageData.isError ?
+                          'profile__buttons-message_type_error' :
+                          ''}`
+                      }>
+                      {profileMessageData.text}
+                    </p>
                     <button className="profile__button hover-opacity" type="button" onClick={() => setIsEdit(!isEdit)}>Редактировать</button>
                     <button
                       className="profile__button profile__button_type_logout hover-opacity"
                       type="button"
-                      onClick={handleLogout}
+                      onClick={onSignout}
                     >
                       Выйти из аккаунта
                     </button>
@@ -80,7 +115,6 @@ const Profile = () => {
         </section>
       </main>
     </>
-
   );
 }
 

@@ -157,9 +157,20 @@
   font-weight: 500;
 }
 
-.profile__buttons-error {
-  color: #ee3465;
+.profile__button_type_disabled-save {
+  background-color: #f8f8f8;
+  color: #c2c2c2;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.profile__buttons-message {
+  color: #2be080;
   text-align: center;
   font-size: 11px;
   line-height: normal;
+}
+
+.profile__buttons-message_type_error {
+  color: #ee3465;
 }
